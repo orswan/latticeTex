@@ -1,0 +1,245 @@
+\documentclass[aps,twocolumn,prb,floatfix,amsmath,amssymb,groupedaddress]{revtex4}
+
+\usepackage{graphicx}
+\usepackage{psfrag}
+\usepackage{epstopdf}
+\usepackage{bm}
+\usepackage[justification=raggedright]{caption}
+\usepackage{subfig}
+\usepackage{enumitem}
+\usepackage[export]{adjustbox}
+\usepackage{mdwlist}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{multirow}
+\newtheorem{prop}{Proposition}
+\newtheorem{qsn}{Question}
+\makeatletter
+\RequirePackage{keyval}
+\usepackage{empheq}
+
+\newcommand*\widefbox[1]{\fbox{\hspace{2em}#1\hspace{2em}}}
+
+\begin{document}
+
+\providecommand{\half}{{\frac{1}{2}}}		% I don't use this, but it's a good reminder on how to make a command.
+
+\title{Near Detuned Optical Lattices (NeDOLs), or \\ Snazzy Atomic Near-Detuned Optical Lattices (SANDOLs)}
+
+\author{Hunter Swan}
+
+\maketitle
+
+Definitions:
+Saturation intensity: \[I_S = \frac{2\pi^2}{3} \hbar\Gamma \frac{f}{\lambda^2}\]
+Saturation parameter: \[s = I/I_S\]
+
+Relevant equations:
+Light shift: \[V = \frac{\Omega^2}{4\delta}\]
+Scattering rate: \[R = \frac{s\Gamma/2}{1+s+\left(\frac{2\delta}{\Gamma}\right)^2}\]
+Rabi frequency: \[\Omega^2 = \half s \Gamma^2\]
+
+Inverting the above gives $s$, $\delta$ in terms of $R$ and $V$:
+\[\delta = \frac{\Gamma}{2}\sqrt{\frac{s\Gamma}{2R}-s-1}\]
+\[s = V \times \frac{4}{\hbar\Gamma} \sqrt{\frac{s\Gamma}{2R}-s-1}\]
+
+
+\section{TA's, ASE, and Fabry-Perot filtering}
+On resonance, $R = \frac{s\Gamma/2}{1+s}$, so $s=\frac{2R}{\Gamma-2R}\approx \frac{2R}{\Gamma}$, for expected scattering rates $R<<\Gamma$.  For $R=1$ Hz and $\Gamma=2\pi\times 7.4$ kHz, this makes $s=4.3e-5$, so that $I=1.3 e-10$ W/cm$^2$.
+
+If a tapered amplifier (TA) has a given amplified spontaneous emission power spectral density $P$ on resonance, the amount of spontaneous emission power on resonance is of order $P\Gamma$, and if the effective beam size is $A$ the corresponding intensity is $P\Gamma/A$.  Assuming this is $<<I_S$, the resulting scattering rate is $\frac{P\Gamma^2}{2AI_S}$.  To knock this down with a Fabry-Perot (etalon) filter to a preferred level $R$, we supress it by a factor \[\frac{1}{1+F\sin^2\left( 2\pi d cos(\theta) f/c \right)} \rightarrow \frac{1}{1+F\sin^2\left( \pi \delta/FSR \right)},\]
+where $F$ is what I call the `fineness' (aka the `coefficient of finesse') and in the former expression $d$ is the mirror separation, $\theta$ the angle of incidence on the etalon, $f$ is the frequency of light, $c$ is the speed of light, and in the latter expression we have specialized to $\theta=0$ and set $f=\delta$ (we assume the etalon is centered to transmit the detuned lattice light, so the frequency distance from resonance to a transmission peak of the etalon is also the detuning $\delta$), and set $c/2d = FSR$, the free spectral range of the etalon. 
+
+Solving for the needed fineness gives \[F = \sin^{-2}\left(\pi\delta/FSR\right) \left[\frac{P\Gamma^2}{2RAI_S}-1\right].\]
+Using the relation $\mathcal{F} = \frac{\pi \sqrt{F}}{2}$, where $\mathcal{F}$ is the finesse of the etalon, we have \[\mathcal{F} = \frac{\pi}{2\sin\left(\pi\delta/FSR\right)} \left[\frac{P\Gamma^2}{2RAI_S}-1\right]^{1/2}.\]
+Note that this only makes sense if the thing inside the brackets is positive--otherwise you don't need to filter at all.  Also note that the conservative thing to do is to drop the 1 in the brackets anyway. 
+
+Plugging in some numbers, we might expect: 
+\begin{itemize}
+\item $P=-50$ dBm/MHz, 
+\item $R=5$ Hz,
+\item $\delta=10$ MHz,
+\item FSR$=c/2d=5$ GHz,
+\end{itemize}
+in which case $\mathcal{F} = 2107$.
+
+\newpage
+
+\section{Quantum mechanics recap}
+Here's a collection of useful formulae for later:
+
+Firstly, $[x,f(p)] = i\hbar f'(p)$ and $[p,f(x)] = \frac{\hbar}{i} f'(x)$ for any analytic function $f$ of operators.
+
+We have position and momentum translation operators:
+\begin{eqnarray*}
+T(a):=\exp(pa/i\hbar) \\
+K(b):=\exp(ixb/\hbar)
+\end{eqnarray*}
+Note that $T(a)^{-1} = T(-a)$ and $K(b)^{-1} = K(-b)$.  Hence $T(a)x T(-a) = x + T(a)[x,T(-a)] = x - T(a)T(-a)a = x+a$, and similarly $K(b)p K(-b) = p - b$.
+
+A note about the interaction picture:  If the Hamiltonian has the form $H = H_0 + K$, where $K$ is some additional term on top of an ``easier'' Hamiltonian $H_0$, then we can eliminate the known time evolution of $H_0$ through the unitary operator \[U=\exp(iH_0t/\hbar).\]
+This works because
+\begin{eqnarray*}
+i\hbar \partial_t U \left|\psi\right> & = & i\hbar (\partial_t U) \left|\psi\right> + i\hbar U \partial_t \left|\psi\right> \\
+ & = & - H_0 U \left|\psi\right> + U H \left|\psi\right> \\
+& = & \left( U \left(H-H_0\right) U^{-1} \right) U \left|\psi\right>
+\end{eqnarray*}
+The new operator $U(H-H_0)U^{-1}$ is the effective Hamiltonian in the interaction picture, and $U\left|\psi\right>$ is the wavefunction in the interaction picture.  The term ``interaction picture'' is perhaps overly pretentious--all we have done is essentially change basis. 
+
+\section{2 level atom}
+For a two level system with basis $\{|0>,|1>\}$ in an electric field $\vec{E}(t) = \vec{E}_0 \cos{\omega t}$, the Hamiltonian is \[H = \hbar\omega_0 |1><1| - \vec{E}\cdot\vec{d},\] which has the matrix form \[
+H = 
+\begin{bmatrix}
+0 & \hbar\Omega \cos(\omega t) \\
+\hbar \Omega^* \cos(\omega t) & \hbar \omega_0 
+\end{bmatrix},
+\] where $\omega_0$ is the unperturbed energy difference of the two level system, $\vec{d}=-e\vec{r}$ (where $\vec{r}$ is the electron position operator) is the dipole moment operator, and $\Omega:=\frac{1}{\hbar}\vec{E}_0\cdot <1|\vec{d}|0>$ is the `Rabi frequency'.
+
+We move to an interaction picture via the unitary operator \[U = 
+\begin{bmatrix}
+1 & 0 \\
+0 & e^{i\omega_0 t}
+\end{bmatrix},
+\] which is the time evolution operator $e^{iH_0 t/\hbar}$ for the ``unperturbed'' system with $\vec{E}=0$.  Recall that this transformation works by considering the evolution of $U|\phi>$: \[i\hbar\partial_t U |\phi> = U \left(H - H_0\right) |\phi> = U \left(H - H_0\right)U^{-1} U |\phi>\].
+
+For the Hamiltonian in question, we have
+\begin{multline}
+U(H-H_0)U^{-1} = \\
+\begin{bmatrix}
+1 & 0 \\
+0 & e^{i\omega_0 t}
+\end{bmatrix}
+\begin{bmatrix}
+0 & \hbar\Omega \cos(\omega t) \\
+\hbar \Omega^* \cos(\omega t) & 0 
+\end{bmatrix}
+\begin{bmatrix}
+1 & 0 \\
+0 & e^{-i\omega_0 t}
+\end{bmatrix}\\
+= \begin{bmatrix}
+0 & \hbar\Omega \cos(\omega t) e^{-i\omega_0 t} \\
+\hbar \Omega^* \cos(\omega t) e^{i\omega_0 t} & 0 
+\end{bmatrix} \\
+= \begin{bmatrix}
+0 & \frac{\hbar\Omega}{2} e^{i\Delta t} \\
+\frac{\hbar\Omega^*}{2} e^{-i\Delta t} & 0 
+\end{bmatrix} + \begin{bmatrix}
+0 & \frac{\hbar\Omega}{2} e^{-i(\omega+\omega_0) t} \\
+\frac{\hbar\Omega^*}{2} e^{i(\omega+\omega_0) t} & 0 
+\end{bmatrix}\\
+=: H' + K,
+\end{multline}
+where $\Delta:=\omega-\omega_0$ is the ``detuning'', and we have defined the operator with the $e^{i\Delta t}$ as a new effective Hamiltonian $H'$, and called the other matrix $K$.  The latter we will discard in what is called the ``rotating wave approximation'', which is a scale separation effect that works as long as the terms $e^{i(\omega + \omega_0) t}$ oscillate quickly compared to the time scales of $H'$, or explicitly $\omega+\omega_0 >> \Omega$, $\Delta$.  
+
+\subsection{Rabi flopping}
+
+\subsection{The light shift}
+If we apply another unitary operator $U = 
+\begin{bmatrix}
+1 & 0 \\
+0 & e^{i\Delta t}
+\end{bmatrix}
+$ after the one we already applied, the Hamiltonian is transformed to $UHU^{-1} + i\hbar(\partial_t U) U^{-1}$, which for the case of $H'$ above works out to $
+\begin{bmatrix}
+0 & \frac{\hbar\Omega}{2} \\
+\frac{\hbar\Omega^*}{2} & -\hbar\Delta 
+\end{bmatrix}.
+$  This is time independent!  It has eigenenergies
+\begin{equation}
+E_{\pm} = -\frac{\hbar\Delta}{2} \pm \frac{\hbar}{2} \sqrt{\Delta^2 + |\Omega|^2}
+\end{equation}
+
+For $\Delta >> \Omega$, this becomes 
+\begin{eqnarray}
+E_{+} & \approx &  \frac{\hbar|\Omega|^2}{4\Delta}\\
+E_{-} & \approx &  -\hbar\Delta - \frac{\hbar |\Omega|^2}{4\Delta}
+\label{approxLightShift}
+\end{eqnarray}
+
+\subsection{A useful relation}
+A very useful relation is the following:  Denote $\left<1|\vec{d}|0\right>$ by ${\mu}$.  Then from the so-called ``Wigner-Weiskopf'' theory of spectral emission of atoms, we get that 
+\begin{equation}
+\hbar\Gamma = \frac{k^3\mu^2}{3\pi\epsilon_0} = \frac{4}{3}k^3\tilde{\mu}^2
+\end{equation}
+Where the second expression is for SI electrostatic units and the last expression is for rationalized electrostatic units.  ($\tilde{\mu}^2 = \frac{\mu^2}{4\pi\epsilon_0}$, and $k = \frac{2\pi}{\lambda}$.)
+
+A consequence of this is that, when the electric field $\vec{E}$ is parallel to $\mu$, we have 
+\begin{eqnarray*}
+\hbar^2|\Omega|^2 & = & |\vec{E}|^2\mu^2 = \frac{3\pi\epsilon_0 \hbar\Gamma |\vec{E}|^2}{k^3} \\
+& = & \half\hbar^2\Gamma^2 \left(\half c \epsilon_0|\vec{E}|^2\right) \left(\frac{2\pi^2\hbar\Gamma f}{3\lambda^2}\right)^{-1}
+\end{eqnarray*}
+Identifying $\half c\epsilon_0 |\vec{E}|^2$ as the intensity $I$ for the local electromagnetic field and defining the ``saturation intensity'' as $I_{SAT}:= \frac{2\pi^2}{3}\hbar f \frac{\Gamma}{\lambda^2}$ and the ``saturation parameter'' $s:=I/I_{SAT}$, we have 
+\begin{equation}
+|\Omega|^2 = \half s \Gamma^2
+\label{usefulRelation}
+\end{equation}
+
+\section{Optical lattices}
+Throughout this section, $E$ will stand for an electric field, $k$ will be a k-vector or k-number, and $w$ will be an angular frequency.  I will drop arrows over vectors, and the juxtaposition of two vectors, like $kx$, will indicate their dot product.
+
+\subsection{Case study}
+I'll begin with the special case of two beams with a common, linear polarization and equal frequency and intensity.  All electric field vectors $E$ will be taken real.
+\[E = E_0 \cos(k_1x-wt) + E_0 \cos(k_2x-wt)\]
+Since the frequencies of the two lasers are equal, $|k_1| = |k_2|=:k$, and I will take the x-axis to be in the direction of $k_1-k_2$.  Name the angle between $k_1$ and $k_2$ to be $\theta$, so that $\cos(\theta) = k_1k_2 / k^2$, and $k_1-k_2 = 2k\sin(\theta/2) \hat{x}$.
+
+Set $K:=k_1-k_2$ and $L:=\half(k_1+k_2)$, so that $k_1 = L+K/2$ and $k_2=L-K/2$.  We have
+\begin{eqnarray*}
+E & = & \frac{E_0}{2} \left(e^{i(k_1x-wt)}+e^{-i(k_1x-wt)}\right)\\
+& &  + \frac{E_0}{2} \left(e^{i(k_2x-wt)}+e^{-i(k_2x-wt)}\right) \\
+& = & \frac{E_0}{2} \left(e^{ik_1x} + e^{ik_2x}\right) e^{-iwt} \\
+& & + \frac{E_0}{2} \left(e^{-ik_1x} + e^{-ik_2x}\right)e^{iwt} \\
+& = & \frac{E_0}{2} \left(e^{iKx/2} + e^{-iKx/2}\right) e^{i(Lx-wt)} \\
+& & + \frac{E_0}{2} \left(e^{-iKx/2} + e^{iKx/2}\right)e^{-i(Lx-wt)} \\
+& = & 2E_0\cos(Kx/2)\cos(Lx-wt)
+\end{eqnarray*}
+
+We see that the electric field oscillates sinusoidally at each point in space, with a periodic modulation in field strenth given by $\cos(Kx/2)$.  This spatially periodic modulation of electric field is what we call an optical lattice.  For large detunings, at each point in space the light shifted ground state energy in the presence of the lattice is given by eqs. (\ref{approxLightShift}) and (\ref{usefulRelation}) to be
+\[E_- = -\hbar\Delta -\frac{\hbar s \Gamma^2}{8\Delta}\]
+Where $s$ is the \textit{local} intensity, proportional to $|E|^2 = |2E_0 \cos(Kx/2)|^2$.  Explicitly, the part of $E_-$ that varies in space (the second term above) has the form
+\[\frac{\hbar s_0 \Gamma^2}{2\Delta} \cos^2(Kx/2)\]
+Where $s_0 = \half c\epsilon_0 |E_0|^2/I_{SAT}$ is the saturation intensity of either single laser beam. 
+
+Using $\cos^2(a) = \half\left(1+\cos(2a)\right)$ and subtracting off the DC component of $E_-$, we can write the AC part as\begin{equation}
+V(x) = \frac{\hbar s_0 \Gamma^2}{4\Delta}\cos(Kx)
+\end{equation}
+This is a potential for the atom in the lattice.  
+
+Now if we assume that gravity is in the x-direction, the Hamiltonian for the lattice + gravity system is \[H = \frac{p^2}{2m} + mgx + \frac{\hbar s_0 \Gamma^2}{4\Delta}\cos(Kx).\]
+
+We try to eliminate the effect of gravity via an interaction picture, using unitary operator $U = \exp(imgxt/\hbar)$.  The interaction picture Hamiltonian is \[H = \frac{(p-mgxt)^2}{2m} + \frac{\hbar s_0 \Gamma^2}{4\Delta}\cos(Kx).\]  We non-dimensionalize this by setting $X:=Kx$, $P:=p / \hbar K$, $E_R:=\hbar^2K^2/2m$, and $T:=E_R t/\hbar = \hbar K^2 t/2m$, giving 
+\begin{eqnarray*}
+H & = & E_R \left(P-\frac{mgxt}{\hbar K}\right)^2 + \frac{\hbar s_0 \Gamma^2}{4 \Delta} \cos(X)\\
+& = & E_R \left(P-aT\right)^2 + E_R U \cos(X)
+\end{eqnarray*}
+Where in the last expression $a = mgx/KE_R$ and $U = \hbar s_0 \Gamma^2/4\Delta E_R$.  The time evolution is then
+\[i\hbar \partial_t \left|\psi\right> = E_R\left(\left(P-aT\right)^2 + U \cos(X)\right) \left|\psi\right>\]
+Or equivalently
+\begin{equation}
+\boxed{i\partial_T \left|\psi\right> = \left(\left(P-aT\right)^2 + U \cos(X)\right) \left|\psi\right>}
+\label{Schrodinger}
+\end{equation}
+So the non-dimensional Hamiltonian is 
+\begin{equation}
+\boxed{H = \left(P-aT\right)^2 + U \cos(X)}
+\label{Hamiltonian}
+\end{equation}
+For good measure, I'll box the parameter definitions, too:
+
+\begin{subequations}
+\begin{empheq}[box=\widefbox]{align}
+E_R &= \frac{\hbar^2 K^2}{2m} \\
+U &= \frac{\hbar s_0 \Gamma^2}{4\Delta E_R} = \frac{s_0 \Gamma^2 m}{2\Delta \hbar K^2} \\
+a &=  \frac{mg}{\hbar K E_R} = \frac{2m^2 g}{\hbar^3 K^3} \\
+K &=  |k_1-k_2| = 2 k \sin(\theta/2)
+\end{empheq}
+\end{subequations}
+
+
+\subsection{General case}
+The electric field of a bunch of plane waves is
+\begin{eqnarray*}
+\vec{E}(x,t) & = & \sum_j \Re\{\vec{E}_j e^{i(k_j x - w_j t)}\}
+\end{eqnarray*}
+
+\end{document}
