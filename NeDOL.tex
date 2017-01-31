@@ -12,6 +12,7 @@
 \usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{multirow}
+\usepackage{breqn}
 \newtheorem{prop}{Proposition}
 \newtheorem{qsn}{Question}
 \makeatletter
@@ -184,15 +185,16 @@ I'll begin with the special case of two beams with a common, linear polarization
 Since the frequencies of the two lasers are equal, $|k_1| = |k_2|=:k$, and I will take the x-axis to be in the direction of $k_1-k_2$.  Name the angle between $k_1$ and $k_2$ to be $\theta$, so that $\cos(\theta) = k_1k_2 / k^2$, and $k_1-k_2 = 2k\sin(\theta/2) \hat{x}$.
 
 Set $K:=k_1-k_2$ and $L:=\half(k_1+k_2)$, so that $k_1 = L+K/2$ and $k_2=L-K/2$.  We have
-\begin{eqnarray*}
-E & = & \frac{E_0}{2} \left(e^{i(k_1x-wt)}+e^{-i(k_1x-wt)}\right)\\
-& &  + \frac{E_0}{2} \left(e^{i(k_2x-wt)}+e^{-i(k_2x-wt)}\right) \\
-& = & \frac{E_0}{2} \left(e^{ik_1x} + e^{ik_2x}\right) e^{-iwt} \\
-& & + \frac{E_0}{2} \left(e^{-ik_1x} + e^{-ik_2x}\right)e^{iwt} \\
-& = & \frac{E_0}{2} \left(e^{iKx/2} + e^{-iKx/2}\right) e^{i(Lx-wt)} \\
-& & + \frac{E_0}{2} \left(e^{-iKx/2} + e^{iKx/2}\right)e^{-i(Lx-wt)} \\
+\begin{eqnarray}
+E & = & \frac{E_0}{2} \left(e^{i(k_1x-wt)}+e^{-i(k_1x-wt)}\right)  \nonumber\\
+& &  + \frac{E_0}{2} \left(e^{i(k_2x-wt)}+e^{-i(k_2x-wt)}\right)  \nonumber\\
+& = & \frac{E_0}{2} \left(e^{ik_1x} + e^{ik_2x}\right) e^{-iwt}  \nonumber\\
+& & + \frac{E_0}{2} \left(e^{-ik_1x} + e^{-ik_2x}\right)e^{iwt}  \nonumber\\
+& = & \frac{E_0}{2} \left(e^{iKx/2} + e^{-iKx/2}\right) e^{i(Lx-wt)}  \nonumber\\
+& & + \frac{E_0}{2} \left(e^{-iKx/2} + e^{iKx/2}\right)e^{-i(Lx-wt)}  \nonumber\\
 & = & 2E_0\cos(Kx/2)\cos(Lx-wt)
-\end{eqnarray*}
+\label{lattice1d}
+\end{eqnarray}
 
 We see that the electric field oscillates sinusoidally at each point in space, with a periodic modulation in field strenth given by $\cos(Kx/2)$.  This spatially periodic modulation of electric field is what we call an optical lattice.  For large detunings, at each point in space the light shifted ground state energy in the presence of the lattice is given by eqs. (\ref{approxLightShift}) and (\ref{usefulRelation}) to be
 \[E_- = -\hbar\Delta -\frac{\hbar s \Gamma^2}{8\Delta}\]
@@ -207,12 +209,12 @@ This is a potential for the atom in the lattice.
 
 Now if we assume that gravity is in the x-direction, the Hamiltonian for the lattice + gravity system is \[H = \frac{p^2}{2m} + mgx + \frac{\hbar s_0 \Gamma^2}{4\Delta}\cos(Kx).\]
 
-We try to eliminate the effect of gravity via an interaction picture, using unitary operator $U = \exp(imgxt/\hbar)$.  The interaction picture Hamiltonian is \[H = \frac{(p-mgxt)^2}{2m} + \frac{\hbar s_0 \Gamma^2}{4\Delta}\cos(Kx).\]  We non-dimensionalize this by setting $X:=Kx$, $P:=p / \hbar K$, $E_R:=\hbar^2K^2/2m$, and $T:=E_R t/\hbar = \hbar K^2 t/2m$, giving 
+We try to eliminate the effect of gravity via an interaction picture, using unitary operator $U = \exp(imgxt/\hbar)$.  The interaction picture Hamiltonian is \[H = \frac{(p-mgt)^2}{2m} + \frac{\hbar s_0 \Gamma^2}{4\Delta}\cos(Kx).\]  We non-dimensionalize this by setting $X:=Kx$, $P:=p / \hbar K$, $E_R:=\hbar^2K^2/2m$, and $T:=E_R t/\hbar = \hbar K^2 t/2m$, giving 
 \begin{eqnarray*}
-H & = & E_R \left(P-\frac{mgxt}{\hbar K}\right)^2 + \frac{\hbar s_0 \Gamma^2}{4 \Delta} \cos(X)\\
+H & = & E_R \left(P-\frac{mgt}{\hbar K}\right)^2 + \frac{\hbar s_0 \Gamma^2}{4 \Delta} \cos(X)\\
 & = & E_R \left(P-aT\right)^2 + E_R U \cos(X)
 \end{eqnarray*}
-Where in the last expression $a = mgx/KE_R$ and $U = \hbar s_0 \Gamma^2/4\Delta E_R$.  The time evolution is then
+Where in the last expression $a = mg/KE_R$ and $U = \hbar s_0 \Gamma^2/4\Delta E_R$.  The time evolution is then
 \[i\hbar \partial_t \left|\psi\right> = E_R\left(\left(P-aT\right)^2 + U \cos(X)\right) \left|\psi\right>\]
 Or equivalently
 \begin{equation}
@@ -228,13 +230,166 @@ For good measure, I'll box the parameter definitions, too:
 
 \begin{subequations}
 \begin{empheq}[box=\widefbox]{align}
-E_R &= \frac{\hbar^2 K^2}{2m} \\
+E_R &= \frac{\hbar^2 K^2}{2m}  \\
 U &= \frac{\hbar s_0 \Gamma^2}{4\Delta E_R} = \frac{s_0 \Gamma^2 m}{2\Delta \hbar K^2} \\
-a &=  \frac{mg}{\hbar K E_R} = \frac{2m^2 g}{\hbar^3 K^3} \\
-K &=  |k_1-k_2| = 2 k \sin(\theta/2)
+a &=  \frac{mg}{K E_R} = \frac{2m^2 g}{\hbar^2 K^3}  \\
+K &=  |k_1-k_2| = 2 k \sin(\theta/2) 
 \end{empheq}
 \end{subequations}
 
+Writing out these in gory detail gives:
+\begin{eqnarray*}
+E_R & = &  \frac{8\pi^2\hbar^2 \sin^2(\theta/2)}{m\lambda^2} \\
+U & = & \frac{s_0 \Gamma^2 m \lambda^2}{32\pi^2\hbar\Delta\sin^2(\theta/2)} \\
+a & = & \frac{m^2 g \lambda^3}{32\pi^3 \hbar^2 \sin^3(\theta/2)} \\
+K & = & \frac{4\pi \sin(\theta/2)}{\lambda}
+\end{eqnarray*}
+
+Realistic parameters are $\theta\approx 1^{\circ}$, $m=88$ amu, and $\lambda = 689$ nm.  This gives $K\approx 1.6e5$ m$^{-1}$ , $a\approx 9500$, and $E_R/\hbar \approx 9.2$ Hz.  Another useful figure is $a\sin^3(\theta/2) = 6.33e-3$.  With this non-dimensionalized system in hand, we proceed to determine what parameters (i.e. light intensity and detuning) we need to hold atoms against gravity.
+
+\subsubsection{Scattering}
+The scattering rate for atoms in the presence of light is 
+\begin{equation}
+R = \frac{s\Gamma/2}{1+s+\left(\frac{2\Delta}{\Gamma}\right)^2}
+\label{scattering}
+\end{equation}
+
+Typically, we have a target scattering rate in mind (an upper bound, at least), and so we invert this to find what sort of detuning we should use.  
+\begin{equation}
+\Delta = \frac{\Gamma}{2} \sqrt{\frac{s\Gamma}{2R} - s - 1} \approx \sqrt{\frac{s\Gamma^3}{8R}}
+\label{detuning}
+\end{equation}
+Where the latter approximation holds as long as $R<<\Gamma$, $s>>1$.  When we want to put a cap on scattering, this expression for $\Delta$ is a lower bound, and thus in the context of a lattice we should interpret $s$ as being the maximum possible intensity anywhere in the lattice, which is given by eq. (\ref{lattice1d}) to be $4s_0$.  Explicitly, \[\Delta = \sqrt{\frac{s_0 \Gamma^3}{2R}}\]
+Good values for $R$ are about 10 Hz.
+
+\subsubsection{Tunneling}
+If we start an atom in a band zero lattice eigenstate with quasimomentum $q\in[-\half,\half]$, due to the $P-aT$ momentum term in the Hamiltonian, it's quasimomentum is effectively changing in time at rate $-a$.  If it changes slowly enough, the wavefunction will adiabatically track the band zero eigenstate of the lattice.  If it changes too quickly, the wavefunction will tunnel into higher bands.  This tunneling is what we want to avoid.
+
+The bulk of the tunneling occurs at the point of minimal separation between bands zero and one, which occurs at the edge of the first Brillouin zone.  We can estimate the amount of tunneling by something called the Landau-Zener tunneling formula.  It states that the probability amplitude of the tunneled part of the wave function upon crossing the edge of the Brillouin zone is given by \[P = \exp\left(\frac{-\pi \omega_{BG}^2}{4a}\right)\]
+Where $\omega_{BG}$ is the frequency of the band gap.  For deep lattices (where the tight binding approximation holds), we can estimate the band gap as follows:  Near the bottom of the potential, the atom sees an approximate harmonic trap.  The harmonic energy level separations are $\sqrt{2U}$, which is thus approximately the band gap.  So we have 
+\begin{equation}
+P\approx \exp\left(\frac{-\pi U}{2a}\right)
+\label{tunneling}
+\end{equation}
+
+For a given tunneling probability $P$ and scattering rate $R$, we can solve for the needed detuning $\Delta$ and incident intensity $s_0$.  The relevant equations are 
+\begin{eqnarray*}
+P & = & \exp\left(\frac{-\pi^2 \hbar s_0 \Gamma^2 \sin(\theta/2)}{4mg\Delta\lambda}\right)\\
+\Delta & \approx & \sqrt{\frac{s_0 \Gamma^3}{2R}} \\
+\therefore P & \approx & \exp\left(\frac{-\pi^2\hbar\sin(\theta/2)}{4mg\lambda}\sqrt{2Rs_0\Gamma}\right) 
+\end{eqnarray*}
+So \[s_0 = \frac{-4mg\Delta\lambda\log(P)}{\pi^2\hbar\Gamma^2\sin(\theta/2)} \approx \frac{8m^2g^2\lambda^2\log^2(P)}{\pi^4\hbar^2\sin^2(\theta/2)R\Gamma}\]
+Or in in terms of intensity, \[I  = s_0 I_{SAT} \approx \frac{16 m^2g^2 f \log^2(P)}{3\pi^2\hbar\sin^2(\theta/2)R}\]
+Plugging in $P=.0001$ and $R=10$ Hz, this works out to $s_0\approx 3.4e6$.  The saturation intensity of the 689 transition in Sr is about 3 $\mu$W/cm$^2$, so the corresponding intensity is $10.2$ W/cm$^2$.
+
+\subsubsection{Blue suppression}
+The scattering rate at a given point of space is proportional (roughly) to the light intensity there.  So if an atom is hanging out in a dark spot, it doesn't scatter much.  This can be arranged by using light blue-detuned from a resonance, so that the atoms are pushed towards regions of low intensity.  You want to arrange your relative beam intensities carefully so that the bottoms of the lattice potential have exactly zero intensity, but this can be done.  We can estimate the effective scattering rate in this scenerio as follows:
+
+The spatially varying dimensionless intensity in a lattice is given by $4 s_0 \cos^2(Kx/2)$, and near the bottom of a well this is approximately given by $s_0K^2x^2$.  The Hamiltonian is $\frac{p^2}{2m} + mgx + \frac{\hbar s_0 \Gamma^2}{4\Delta}\cos(Kx)$, which near a well bottom is approximately 
+\begin{eqnarray*}
+H & \approx & \frac{p^2}{2m} + mgx + \frac{\hbar s_0 \Gamma^2}{4\Delta} \times\half K^2x^2 \\
+& = & \frac{p^2}{2m} + \frac{\hbar s_0\Gamma^2 K^2}{8\Delta} \left(x + \frac{4mg\Delta}{\hbar s_0\Gamma^2K^2}\right)^2 - \frac{2m^2g^2\Delta}{\hbar s_0 \Gamma^2 K^2} \\
+& =: & \frac{p^2}{2m} + \half m\omega^2 (x+x_0)^2 + C
+\end{eqnarray*}
+Where in the final expression we have defined $\omega := \sqrt{\frac{\hbar s_0 \Gamma^2 K^2}{4m\Delta}}$ and $x_0 := \frac{4mg\Delta}{\hbar s_0 \Gamma^2 K^2} = \frac{g}{\omega^2}$ ($C$ being some constant offset that will be dropped from here onwards).  This is a harmonic oscillator potential, which has ground state wavefunction
+\begin{equation*}
+\psi(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4}\exp\left(- \frac{m\omega}{2\hbar}\left(x+x_0\right)^2\right)
+\end{equation*}
+For such a wavefunction, the average dimensionless intensity seen by the atom is given by 
+\[\int \psi(x)^2 s_0 K^2 x^2 dx = s_0 K^2 \left(\frac{\hbar}{2m\omega} + x_0^2\right)\]
+Plugging in the expressions for $\omega$ and $x_0$ this becomes
+\[ s_0 \left( \left(\frac{4mg\Delta}{\hbar s_0\Gamma^2 K}\right)^2 + \sqrt{\frac{\hbar\Delta K^2}{ms_0\Gamma^2}}\right) = s_0 \left( \left(\frac{a}{U}\right)^2 + \sqrt{\frac{1}{2U}}\right)\]
+
+For the present case, $\left(\frac{a}{U}\right)^2 >> \sqrt{\frac{1}{2U}}$, so the effective intensity is $\approx s_0 \left(\frac{a}{U}\right)^2$, which in turn equals (via eq. (\ref{tunneling})) $\frac{-\pi s_0}{2\log(P)}$.  Inserting this into eq. (\ref{detuning}) for the needed detuning to achieve a given scattering rate, we find
+\[\Delta\approx \sqrt{\frac{-\pi s_0\Gamma^3}{16R\log(P)}}\]
+Thus 
+\[P\approx\exp\left(\frac{-\pi^{3/2}\hbar\sin(\theta/2)}{mg\lambda}\sqrt{-Rs_0\Gamma \log(P)}\right) \]
+Solving for $s_0$, we get
+\begin{equation}
+s_0 = \frac{-\log(P)}{R\Gamma} \left(\frac{mg\lambda}{\pi^{3/2}\hbar \sin(\theta/2)}\right)^2
+\end{equation}
+
+For $R=10$ Hz, $\theta=1^{\circ}$, and $P=10^{-4}$ on the Sr 689 line, this works out to $3.3 \times 10^5$, a factor of 10 better than the red detuned case.
+
+\subsubsection{Kinematics}
+We want to use the lattice to transport atoms.  For two static beams with width $w$ interesecting at angle $\theta$, the region in which they overlap has length $L = w/\sin(\theta/2)$.  Thus the power required to transport atoms over distance $L$ can be estimated as \[w^2 s_0 I_{SAT} = L^2 \sin^2(\theta/2) s_0 I_{SAT} = \frac{16 L^2 m^2g^2 f \log^2(P)}{3\pi^2\hbar R}\]
+For $L=1$ m, $R=10$ Hz, and $P=10^{-4}$ this works out to 7.6 Watts.
+
+An alternative approach is to put one beam pointed horizontal and the other pointed just above horizontal by angle $\theta/2$, and to accelerate the lattice so as to cancel gravity.  For two beams of width $w$, the region where they overlap is a parallelogram of width $L = \half w /\sin(\theta/2)$.  The lattice itself is inclined at angle $\theta/4$ relative to gravity, so the total acceleration is given by $A+g\sin(\theta/4)$.  We want the net downwards acceleration of the atoms, $A\sin(\theta/4)-g$, to be zero, so total acceleration is $g\sin(\theta/4) + g/\sin(\theta/4)$.  For small angles $\theta$, this is $\approx g/\sin(\theta/4)$, and the total power required is 
+\[w^2 s_0 I_{SAT} \approx \frac{256 L^2 m^2g^2 f \log^2(P)}{3\pi^2\hbar R}\]
+which is 16 times larger than the above method.
+
+Another approach is to launch the atoms and catch them on the other side.  The amount of power to launch them distance $L$ works out to \[\approx \frac{4 L^2 m^2g^2 f \log^2(P)}{3\pi^2\hbar R \cos(\theta/4)},\] which is a factor of 4 better than the first approach.
+
+
+\subsubsection{Moving States}
+In the presense of non-zero acceleration $a$, the instantaneous eigenstates of the Hamiltonian, which we denote by $\left|n,q\right>$ for band $n$ at quasimomentum $q$, are not the most ``stationary'' states available--if you start a wavefunction in such a state, it will oscillate back and forth between other states, more so than it needs to.  To figure out what are the ``most stationary" states of the moving system, expand a wavefunction as
+\[\left|\psi\right> = \sum_m c_m(t) \left|m,q(t)\right>,\]
+where $q(t) = q_0 - at$ is the instantaneous quasimomentum.  Applying the Schrodinger equation to this gives
+\begin{eqnarray*}
+i\partial_t\left|\psi\right> & = & i \sum_m \dot{c}_m(t) \left|m,q(t)\right> + c_m(t)\partial_t \left|m,q(t)\right> \\
+& = & H_{q(t)} \sum_m c_m(t) \left|m,q(t)\right> \\
+& = & \sum_m E_{m,q(t)} c_m(t) \left|m,q(t)\right>
+\end{eqnarray*}
+Therefore
+\begin{eqnarray*}
+i\dot{c}_n & = & \sum_m \left(E_{m,q} \delta_{nm} - i \left<n,q\right| \partial_t \left|m,q\right>\right) c_m \\
+& = & \sum_m \left(E_{m,q} \delta_{nm} - i \frac{dq}{dt} \left<n,q\right| \partial_q \left|m,q\right>\right) c_m \\
+\end{eqnarray*}
+
+In our case, $\frac{dq}{dt} = -a$.  To evaluate this, we need to figure out how to deal with the $\left<n,q\right|\partial_q\left|m,q\right>$ factor.  To do so, begin with the relation $H_q \left|m,q\right> = E_{m,q} \left|m,Q\right>$ and expand $q =: Q + dq$ around $Q$ to get 
+\begin{eqnarray*}
+H_{Q+dq} \left|m,Q+dq\right> & = & \left(H_Q + dq \partial_qH_Q + \cdots\right) \\
+& & \times\left(\left|m,Q\right>+dq\partial_q\left|m,Q\right> + \cdots\right) \\
+& = & H_Q\left|m,Q\right> \\
+& + & dq\left(H_Q\partial_q\left|m,Q\right> + \left(\partial_qH_Q\right)\left|m,Q\right>\right) \\
+& + & \mathcal{O}(dq^2) \\
+\end{eqnarray*}
+and
+\begin{eqnarray*}
+\!\!\!E_{m,Q+dq} \left|m,Q+dq\right> & = & \left(E_{m,Q} + dq \partial_q E_{m,Q} + \cdots\right) \\
+& & \times \left(\left|m,Q\right> + dq \partial_q \left|m,Q\right>\right) \\
+& = & E_{m,Q} \left|m,Q\right> \\
+& + & dq \left(E_{m,Q}\partial_q\left|m,Q\right> + \left|m,Q\right>\partial_q E_{m,Q}\right) \\
+& + & \mathcal{O}(dq^2)
+\end{eqnarray*}
+
+The zeroth order tems above match up automatically.  Equating the first order terms gives
+\[\!\!\!\!\!H_Q\partial_q\left|m,Q\right> + \left(\partial_qH_Q\right)\left|m,Q\right> = E_{m,Q}\partial_q\left|m,Q\right> + \left|m,Q\right>\partial_q E_{m,Q}\]
+so that
+\begin{eqnarray*}
+& & \left<n,Q\right|\partial_q\left|m,Q\right> E_{m,Q} + \partial_q E_{m,Q} \delta_{nm} \\
+& = & \left<n,Q\right|H_Q\partial_q\left|m,Q\right> + \left<n,Q\right|\left(\partial_q H_Q\right)\left|m,Q\right> \\
+& = & E_{Q,n}\left<n,Q\right|\partial_q\left|m,Q\right> + \left<n,Q\right|\left(\partial_q H_Q\right)\left|m,Q\right> \\
+\end{eqnarray*}
+therefore
+\begin{eqnarray*}
+& \left(E_{n,Q}-E_{m,Q}\right) \left<n,Q\right|\partial_q\left|m,Q\right> \\
+ & = \partial_q E_{m,Q}\delta_{nm}-\left<n,Q\right|\left(\partial_q H_Q\right)\left|m,Q\right>
+\end{eqnarray*}
+For $n=m$, this says that $\partial_q E_{n,Q} = \left<n,Q\right|\left(\partial_q H_Q\right)\left|n,Q\right>$.  For $n\neq m$, assuming a non-degenerate spectrum, we have 
+\begin{equation}
+\left<n,Q\right|\partial_q\left|m,Q\right> = \frac{\left<n,Q\right|\left(\partial_q H_Q\right)\left|m,Q\right>}{E_{m,Q}-E_{n,Q}}
+\end{equation}
+
+Interestingly, the diagonal element $\left<n,Q\right|\partial_q\left|n,Q\right>$ is generally not well-defined.  This is because the eigenstate $\left|n,q\right>$ is only defined up to a phase.  If we replace it by $e^{i\theta(q)}\left|n,q\right>$, where $\theta(q)$ is a smooth, real function, then the corresponding diagonal element becomes $\left<n,Q\right|e^{-i\theta(q)}\partial_qe^{i\theta(q)}\left|n,Q\right> = \left<n,Q\right|\partial_q\left|n,Q\right> + i\theta'(q)$, which can thus be set to any desired imaginary value by appropriate choice of $\theta(q)$.  The real part, however, must be zero because 
+\begin{eqnarray*}
+0 & = & \partial_q 1 \\
+& = & \partial_q \left<n,Q\right|\left|n,Q\right> \\
+& = & \left( \partial_q \left<n,Q\right|\left|n,Q\right>\right) + \left( \left<n,Q\right|\partial_q\left|n,Q\right>\right) \\
+& = & \left( \left<n,Q\right|\partial_q\left|n,Q\right>\right)^* \left( \left<n,Q\right|\partial_q\left|n,Q\right>\right) \\
+& = & 2 \Re\left( \left<n,Q\right|\partial_q\left|n,Q\right>\right)
+\end{eqnarray*}
+
+Now in the present lattice case, the Hamiltonian can be viewed as $H_q = (q+P_0)^2 + U\cos(X)$, where $P_0$ is the momentum operator for quasimomentum $0$.  So $\partial_q H_Q = 2(q+P_0)$.  Thus the time evolution for $c_n$ is given by
+\begin{equation}
+i\dot{c}_n = \mathcal{H}_{q(t),nm}c_m
+\end{equation}
+where the Hermitian ``moving Hamiltonian" is given by
+\begin{equation}
+\mathcal{H}_{q(t),nm} = -i\frac{dq}{dt} \frac{\left<n,q(t)\right|2\left(q(t)+P_0\right)\left|m,q(t)\right>}{E_{m,q(t)}-E_{n,q(t)}}
+\end{equation}
+for $n\neq m$.  We set the diagonal elements of $\mathcal{H}$ to zero (or any other convenient value) as described above.  An eigenstate of this matrix at a given time $t$ looks ``instantaneously stationary".  This is because if $\mathcal{H}c = \alpha c$, then $\dot{c} = -i\alpha c$, which means the amplitudes $|c_n|^2$ are not changing in time.
 
 \subsection{General case}
 The electric field of a bunch of plane waves is
