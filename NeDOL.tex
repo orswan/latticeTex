@@ -25,14 +25,14 @@
 
 \providecommand{\half}{{\frac{1}{2}}}		% I don't use this, but it's a good reminder on how to make a command.
 
-\title{Near Detuned Optical Lattices (NeDOLs), or \\ Snazzy Atomic Near-Detuned Optical Lattices (SANDOLs)}
+\title{Lattice Optical Transport Atomic Shuttle (LOTAS), or \\ Near Detuned Optical Lattices (NeDOLs), or \\ Snazzy Atomic Near-Detuned Optical Lattices (SANDOLs), or \\How I Learned to Love the Bomb}
 
 \author{Hunter Swan}
 
 \maketitle
 
 Definitions:
-Saturation intensity: \[I_S = \frac{2\pi^2}{3} \hbar\Gamma \frac{f}{\lambda^2}\]
+Saturation intensity: \[I_S = \frac{2\pi^2}{3} \hbar f \frac{\Gamma}{\lambda^2}\]
 Saturation parameter: \[s = I/I_S\]
 
 Relevant equations:
@@ -76,7 +76,7 @@ We have position and momentum translation operators:
 T(a):=\exp(pa/i\hbar) \\
 K(b):=\exp(ixb/\hbar)
 \end{eqnarray*}
-Note that $T(a)^{-1} = T(-a)$ and $K(b)^{-1} = K(-b)$.  Hence $T(a)x T(-a) = x + T(a)[x,T(-a)] = x - T(a)T(-a)a = x+a$, and similarly $K(b)p K(-b) = p - b$.
+Note that $T(a)^{-1} = T(-a)$ and $K(b)^{-1} = K(-b)$.  Hence $T(a)x T(-a) = x + T(a)[x,T(-a)] = x - T(a)T(-a)a = x-a$, and similarly $K(b)p K(-b) = p - b$.
 
 A note about the interaction picture:  If the Hamiltonian has the form $H = H_0 + K$, where $K$ is some additional term on top of an ``easier'' Hamiltonian $H_0$, then we can eliminate the known time evolution of $H_0$ through the unitary operator \[U=\exp(iH_0t/\hbar).\]
 This works because
@@ -88,20 +88,20 @@ i\hbar \partial_t U \left|\psi\right> & = & i\hbar (\partial_t U) \left|\psi\rig
 The new operator $U(H-H_0)U^{-1}$ is the effective Hamiltonian in the interaction picture, and $U\left|\psi\right>$ is the wavefunction in the interaction picture.  The term ``interaction picture'' is perhaps overly pretentious--all we have done is essentially change basis. 
 
 \section{2 level atom}
-For a two level system with basis $\{|0>,|1>\}$ in an electric field $\vec{E}(t) = \vec{E}_0 \cos{\omega t}$, the Hamiltonian is \[H = \hbar\omega_0 |1><1| - \vec{E}\cdot\vec{d},\] which has the matrix form \[
+For a two level system with basis $\{\left|0\right>,\left|1\right>\}$ in an electric field $\vec{E}(t) = \vec{E}_0 \cos{\omega t}$, the Hamiltonian is \[H = \hbar\omega_0 \left|1\right>\left<1\right| - \vec{E}\cdot\vec{d},\] which has the matrix form \[
 H = 
 \begin{bmatrix}
 0 & \hbar\Omega \cos(\omega t) \\
 \hbar \Omega^* \cos(\omega t) & \hbar \omega_0 
 \end{bmatrix},
-\] where $\omega_0$ is the unperturbed energy difference of the two level system, $\vec{d}=-e\vec{r}$ (where $\vec{r}$ is the electron position operator) is the dipole moment operator, and $\Omega:=\frac{1}{\hbar}\vec{E}_0\cdot <1|\vec{d}|0>$ is the `Rabi frequency'.
+\] where $\omega_0$ is the unperturbed energy difference of the two level system, $\vec{d}=-e\vec{r}$ (where $\vec{r}$ is the electron position operator) is the dipole moment operator, and $\Omega:=\frac{1}{\hbar}\vec{E}_0\cdot \left<1\right|\vec{d}\left|0\right>$ is the `Rabi frequency'.
 
 We move to an interaction picture via the unitary operator \[U = 
 \begin{bmatrix}
 1 & 0 \\
 0 & e^{i\omega_0 t}
 \end{bmatrix},
-\] which is the time evolution operator $e^{iH_0 t/\hbar}$ for the ``unperturbed'' system with $\vec{E}=0$.  Recall that this transformation works by considering the evolution of $U|\phi>$: \[i\hbar\partial_t U |\phi> = U \left(H - H_0\right) |\phi> = U \left(H - H_0\right)U^{-1} U |\phi>\].
+\] which is the time evolution operator $e^{iH_0 t/\hbar}$ for the ``unperturbed'' system with $\vec{E}=0$.  Recall that this transformation works by considering the evolution of $U\left|\phi\right>$: \[i\hbar\partial_t U \left|\phi\right> = U \left(H - H_0\right) \left|\phi\right> = U \left(H - H_0\right)U^{-1} U \left|\phi\right>\].
 
 For the Hamiltonian in question, we have
 \begin{multline}
@@ -159,7 +159,7 @@ E_{-} & \approx &  -\hbar\Delta - \frac{\hbar |\Omega|^2}{4\Delta}
 \end{eqnarray}
 
 \subsection{A useful relation}
-A very useful relation is the following:  Denote $\left<1|\vec{d}|0\right>$ by ${\mu}$.  Then from the so-called ``Wigner-Weiskopf'' theory of spectral emission of atoms, we get that 
+A very useful relation is the following:  Denote $\left<1\right|\vec{d}\left|0\right>$ by ${\mu}$.  Then from the so-called ``Wigner-Weiskopf'' theory of spectral emission of atoms, we get that 
 \begin{equation}
 \hbar\Gamma = \frac{k^3\mu^2}{3\pi\epsilon_0} = \frac{4}{3}k^3\tilde{\mu}^2
 \end{equation}
@@ -376,8 +376,8 @@ Interestingly, the diagonal element $\left<n,Q\right|\partial_q\left|n,Q\right>$
 \begin{eqnarray*}
 0 & = & \partial_q 1 \\
 & = & \partial_q \left<n,Q\right|\left|n,Q\right> \\
-& = & \left( \partial_q \left<n,Q\right|\left|n,Q\right>\right) + \left( \left<n,Q\right|\partial_q\left|n,Q\right>\right) \\
-& = & \left( \left<n,Q\right|\partial_q\left|n,Q\right>\right)^* \left( \left<n,Q\right|\partial_q\left|n,Q\right>\right) \\
+& = & \left( \partial_q \left<n,Q\right|\right)\left|n,Q\right> + \left<n,Q\right|\left( \partial_q\left|n,Q\right>\right) \\
+& = & \left<n,Q\right|\partial_q\left|n,Q\right>^* + \left<n,Q\right|\partial_q\left|n,Q\right> \\
 & = & 2 \Re\left( \left<n,Q\right|\partial_q\left|n,Q\right>\right)
 \end{eqnarray*}
 
@@ -390,6 +390,40 @@ where the Hermitian ``moving Hamiltonian" is given by
 \mathcal{H}_{q(t),nm} = -i\frac{dq}{dt} \frac{\left<n,q(t)\right|2\left(q(t)+P_0\right)\left|m,q(t)\right>}{E_{m,q(t)}-E_{n,q(t)}}
 \end{equation}
 for $n\neq m$.  We set the diagonal elements of $\mathcal{H}$ to zero (or any other convenient value) as described above.  An eigenstate of this matrix at a given time $t$ looks ``instantaneously stationary".  This is because if $\mathcal{H}c = \alpha c$, then $\dot{c} = -i\alpha c$, which means the amplitudes $|c_n|^2$ are not changing in time.
+
+\subsection{Far detuned lattices}
+When the incident laser light for a lattice is far detuned from all relevant atomic transitions, we can take a different approach to calculating the induced light shift, based on perturbation theory instead of solving the multi-level system directly.  This approach is detailed well in Pethick \& Smith 3.3, and I'll just cite the result here:  The energy shift $\Delta E$ in the presence of a field $\mathcal{E}(t) = \mathcal{E}_0 \cos(\omega t)$ is given by 
+\[ \Delta E = -\half \alpha(\omega) \left<\mathcal{E}(t)^2\right>_t = -\frac{1}{2c\epsilon_0} \alpha(\omega) I\]
+where $\left<\cdots\right>_t$ denotes a time average, $I$ is intensity, and 
+\begin{eqnarray*}
+\alpha(\omega) & = & \sum_n \left| \left<n\right| d \left| 0\right>\right|^2 \left(\frac{1}{E_n -E_0 + \hbar \omega} + \frac{1}{E_n -E_0 -\hbar \omega}\right) \\
+& = & \sum_n \frac{2\left(E_n - E_0\right) |\mu_{n0}|^2}{(E_n - E_0)^2 - (\hbar \omega)^2} \\
+& = & \frac{e^2}{m_e} \sum_n \frac{f_{n0}}{\omega_{n0}^2 - \omega^2}
+\end{eqnarray*}
+where $\mu_{n0}$ is the dipole moment between states $n$ and $0$, and $f_{n0}$ is the corresponding oscillator strength.  
+
+A useful identity for the oscillator strength is $f_{nm} = \left(\frac{3\epsilon_0 m_e c}{2\pi e^2}\right) \Gamma_{nm} \lambda_{nm}^2$.  The constant $\left(\frac{3\epsilon_0 m_e c}{2\pi e^2}\right) = 44 975.8136$ $s$ $m^{-2}$.  Hence the oscillator strength for the Sr 461 nm transition is 1.92, whereas for the 689 transition it is .001.  So we can pretty much just focus on the 461 transition.  Hence the energy shift is given approximately by 
+\[\Delta E \approx \left(\frac{e^2}{2mc\epsilon_0}\right) \left(\frac{1.92}{(650.5 THz)^2 - \omega^2}\right) I \]
+
+For a 1064 nm laser, this works out to $\Delta E/I = 2.96 \times 10^{-31}$ Joules/(Watts/cm$^2$).
+
+\subsubsection{Case study: Dipole rail}
+Suppose we want to suspend atoms against gravity by a horizontal, red-detuned, Gaussian laser beam.  The intensity of such a beam is given by \[I = I_0 \frac{w_0^2}{w(z)^2} \exp\left(\frac{-2r^2}{w(z)^2}\right) \] where $I_0$ is the intensity at the beam center, $w_0$ is the beam waist, $w(z)^2 = w_0^2 \left(1 + z^2/z_R^2\right)$, and $z_R$ is the Rayleigh range.  The potential generated by such a beam is $\Delta E = \beta I$, for a constant $\beta$ calculated above.  
+
+We want the maximum magnitude of the gradient $\partial_r \Delta E$ to be greater than the force of gravity.  The maximum of $\exp(-2r^2/w(z)^2)$ is at $r=\pm w(z)/2$, and the magnitude of the gradient at this point is $\frac{2}{w(z)\sqrt{e}}$ (where $e$ is the mathematical constant here).  Hence the maximum gradient of the potential is given by \[I_0 \frac{2w_0^2}{w(z)^3 \sqrt{e}} = I_0 \sqrt{\frac{4\pi}{e z_R \lambda}}\left(1+z^2/z_R^2\right)^{-3/2}\]
+
+Suppose we want the rail to span a distance $L$, so we put the beam waist in the middle of the span and make $z_R = L/2$.  The the gradient at the ends of the rail (where it is weakest) is given by \[ I_0 \sqrt{\frac{\pi}{eL\lambda}}\]
+Hence the force due to the potential here is given by \[\partial_r \Delta E = \beta I_0 \sqrt{\frac{\pi}{eL\lambda}}\]
+Requiring this be greater than gravity, $\partial_r \Delta E > mg$, sets a limit on intensity:
+\[I_0 > \frac{mg}{\beta} \sqrt{\frac{eL\lambda}{\pi}}\]
+Combining with the above expression for $\beta$, this becomes
+\[I_0 > mg \sqrt{\frac{eL\lambda}{\pi}} \left(\frac{2mc\epsilon_0}{\bar{e}^2}\right) \left(\frac{(650.5 THz)^2 - \omega^2}{1.92}\right) \]
+where I've put a bar on the electron charge to distinguish it from the mathematical constant.
+
+As a final step, the intensity $I_0$ is related to the total power $P$ in the beam by (integrating over any plane) $P = I_0 \frac{\pi w_0^2}{2} = I_0 \frac{L\lambda}{4}$.  So the total power of the beam should satisfy
+\[ P > \frac{L\lambda mg}{4} \sqrt{\frac{eL\lambda}{\pi}} \left(\frac{2mc\epsilon_0}{\bar{e}^2}\right) \left(\frac{(650.5 THz)^2 - \omega^2}{1.92}\right) \]
+
+For the 1064 laser considered above and for a distance $L=1m$, this works out to 12.4 Watts.  
 
 \subsection{General case}
 The electric field of a bunch of plane waves is
